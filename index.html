@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Wheel of Fortune</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Bungee|Orbitron" rel="stylesheet">
+
+	<style type="text/css">
+
+		body, html{
+			padding: 0px;
+			margin: 0px;
+		}
+			
+		#bankDisplay{
+			height: 50px;
+			width: 200px;
+			text-align: center;
+			background-color: black;
+			color: white;
+			font-family: "Orbitron", helvetica;
+			line-height: 55px;
+			font-size: 30px;
+		}
+		#spinButton{
+			width: 400px;
+			height: 75px;
+			margin: 0px auto;
+			background-color: maroon;
+			font-family: "Bungee", helvetica; 
+			color: white;
+			font-size: 50px;
+		}
+		.letters{
+			background-color: teal;
+			height: 60px;
+			width: 40px;
+			color: teal;
+			font-family: "Bungee", helvetica;
+			font-size: 30px;
+			text-align: center;
+			line-height: 60px;
+			margin: 10px;
+			display: inline-block;
+			text-transform: uppercase;
+			-webkit-user-select: none;
+		}
+		#letterBoard{
+			background-color: black;
+			width: 60%;
+			margin: 20px auto;
+			padding: 20px;
+			text-align: center;
+		}
+		#buttonsBoard{
+			background-color: maroon;
+			width: 100%;
+			margin: 20px auto;
+			padding: 20px;
+			text-align: center;
+			position: absolute;
+			bottom: 0px;
+		
+		}
+		.letterButtons{
+			background-color: teal;
+			height: 60px;
+			width: 40px;
+			color: white;
+			font-family: "Bungee", helvetica;
+			font-size: 30px;
+			text-align: center;
+			line-height: 60px;
+			margin: 10px;
+			display: inline-block;
+			cursor: pointer;
+			box-shadow: 4px 4px 0px rgb(0,0,0);
+			-webkit-user-select: none;
+
+		}
+		.letterButtons:active {
+			background-color: white;
+			color: teal;
+			position: relative;
+			top: 4px;
+			left: 4px;
+			box-shadow: 0px 0px 0px rgb(0,0,0);
+		}
+		#wheelText{
+			color: maroon;
+			background-color: white;
+			font-size: 50px;
+			/*height: 100px;*/
+			width: 100%;
+			font-family: "Bungee", helvetica;
+			margin-top: 10px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<center><div id="wheelText">Wheel of Fortune!</div></center>
+		<!-- Spin stuff -->
+	<center><div id="bankDisplay">$0</div></center>
+	<center><input type="button" id="spinButton" value="Spin!"></center>
+
+	<!-- Letter Stuff -->
+<div id="letterBoard"></div>
+
+<div id="buttonsBoard">
+	<div class="letterButtons">A</div>
+	<div class="letterButtons">B</div>
+	<div class="letterButtons">C</div>
+	<div class="letterButtons">D</div>
+	<div class="letterButtons">E</div>
+	<div class="letterButtons">F</div>
+	<div class="letterButtons">G</div>
+	<div class="letterButtons">H</div>
+	<div class="letterButtons">I</div>
+	<div class="letterButtons">J</div>
+	<div class="letterButtons">K</div>
+	<div class="letterButtons">L</div>
+	<div class="letterButtons">M</div>
+	<div class="letterButtons">N</div>
+	<div class="letterButtons">O</div>
+	<div class="letterButtons">P</div>
+	<div class="letterButtons">Q</div>
+	<div class="letterButtons">R</div>
+	<div class="letterButtons">S</div>
+	<div class="letterButtons">T</div>
+	<div class="letterButtons">U</div>
+	<div class="letterButtons">V</div>
+	<div class="letterButtons">W</div>
+	<div class="letterButtons">X</div>
+	<div class="letterButtons">Y</div>
+	<div class="letterButtons">Z</div>
+</div>
+
+<script type="text/javascript">
+
+	var wheelArray = ["Bankrupt", 300, 600, 900, 1200, 1500, 1800, 2100, 2400, 10000];
+	var wordArray = ["Papercut", "Photoshop", "Teaching", "Disappear", "Mathetics", "Javascript", "Disastrous", "Legendary"];
+	var spinBtn = document.getElementById("spinButton");
+	var randomNo;
+	var bank = 0;
+	var bankDis = document.getElementById("bankDisplay");
+	var lBoard = document.getElementById("letterBoard");
+
+	spinBtn.addEventListener("click", spinWheel);
+
+
+	function spinWheel(){
+		
+		randomNo = Math.round(Math.random() * wheelArray.length);
+		if( isNaN(wheelArray[randomNo]) ){
+			bank = 0;
+			bankDisplay.innerHTML = "$0";
+			alert("You went Bankrupt!");
+		} else {
+			alert("You spun $" + String(wheelArray[randomNo])+ "!");
+			// bank += wheelArray[randomNo];
+			// bankDis.innerHTML = "$" + String(bank);
+		}
+	}
+
+//Letters Stuff
+var randomWordNo = Math.floor( Math.random() * wordArray.length);
+
+for( var i=0; i < wordArray[randomWordNo].length ; i++ ){
+	var newLetter = document.createElement("div");
+	var newText = document.createTextNode( wordArray[randomWordNo].charAt(i) );
+	newLetter.setAttribute("class","letters");
+	newLetter.appendChild(newText);
+	lBoard.appendChild(newLetter);
+}
+var letterButtonArray = document.getElementsByClassName("letterButtons");
+var letterArray = document.getElementsByClassName("letters");
+
+function checkMatches(x){
+	letterButtonArray[x].addEventListener("click", checkLetters);
+
+function checkLetters(){
+	for( var i = 0; i < wordArray[randomWordNo].length ; i++){
+		if( letterButtonArray[x].innerHTML == wordArray[randomWordNo].charAt(i).toUpperCase() ){
+			letterArray[i].style.backgroundColor = "white";
+			letterArray[i].style.color = "teal";
+
+			if( isNaN(wheelArray[randomNo]) == false){
+				bank += wheelArray[randomNo];
+				bankDis.innerHTML = "$" + String(bank);
+			}
+		} else {
+			//alert("Sorry, try again!");
+		}
+	}
+}
+}
+
+for(var i = 0; i < letterButtonArray.length; i++){
+	checkMatches(i);
+}
+	
+</script>
+
+</body>
+</html>
